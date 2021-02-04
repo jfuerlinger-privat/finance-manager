@@ -7,6 +7,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Primitives;
 
 namespace FinanceManager.Api.InvoiceManagement
 {
@@ -33,10 +34,9 @@ namespace FinanceManager.Api.InvoiceManagement
       if (string.IsNullOrEmpty(name))
       {
         return new BadRequestObjectResult("No Name provided!");
-      } 
+      }
 
-      string[] tags = JsonConvert.DeserializeObject<string[]>(formdata["tags"]);
-
+      string[] tags = formdata["tags"].ToArray();
       if(tags == null)
       {
         return new BadRequestObjectResult("No Tags provided!");
