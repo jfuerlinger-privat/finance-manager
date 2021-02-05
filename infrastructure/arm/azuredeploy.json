@@ -26,11 +26,11 @@
         "projectName": "financemanager",
         "profileName": "[concat('financemanager-cdn-', parameters('stageName'))]",
         "workspaceName": "[concat('financemanager-', parameters('stageName'))]",
-        "funcAppName":"[concat('func-', variables('projectName'), '-', parameters('stageName'))]",
-        "hostingPlanName":"[concat('plan-', variables('projectName'), '-serverless-', parameters('stageName'))]",
+        "funcAppName": "[concat('func-', variables('projectName'), '-', parameters('stageName'))]",
+        "hostingPlanName": "[concat('plan-', variables('projectName'), '-serverless-', parameters('stageName'))]",
         "endpointName": "[concat('financemanager-endpoint-', parameters('stageName'))]",
         "storageAccountName": "[replace(concat('st', variables('projectName'), parameters('stageName')), '-', '')]",
-        "customDomainName" : "mysite.customdomain.com",
+        "customDomainName": "mysite.customdomain.com",
         "customDomain": "[replace(variables('customDomainName'),'.','-')]"
     },
     "resources": [
@@ -66,75 +66,73 @@
                 "name": "Standard_LRS"
             },
             "kind": "StorageV2",
+            "tags": "[parameters('resourceTags')]"
+        },
+        {
+            "name": "[variables('profileName')]",
+            "type": "Microsoft.Cdn/profiles",
+            "location": "[parameters('location')]",
+            "apiVersion": "2020-04-15",
+            "sku": {
+                "name": "Standard_Microsoft"
+            },
             "tags": "[parameters('resourceTags')]",
-
+            "properties": {}
         },
 
-{
-        "name": "[variables('profileName')]",
-        "type": "Microsoft.Cdn/profiles",
-        "location": "[parameters('location')]",
-        "apiVersion": "2020-04-15",
-        "sku": {
-            "name": "Standard_Microsoft"
-        },
-        "tags": "[parameters('resourceTags')]",
-        "properties": { }
-      },
-
-      {
-        "apiVersion": "2020-04-15",
-        "name": "[concat(variables('profileName'),'/',variables('endpointName'))]",
-        "type": "Microsoft.Cdn/profiles/endpoints",
-        "location": "[parameters('location')]",
-        "tags": "[parameters('resourceTags')]",
-        "dependsOn": [
-          "[variables('profileName')]",
-          "[variables('storageAccountName')]"
-        ],
-        "properties": {
-          "originHostHeader": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.blob,'https://',''),'/','')]",
-          "isHttpAllowed": "false",
-          "isHttpsAllowed": "true",
-          "queryStringCachingBehavior": "IgnoreQueryString",
-          "contentTypesToCompress": [
-            "text/plain",
-            "text/html",
-            "text/css",
-            "application/x-javascript",
-            "text/javascript"
-        ],
-          "isCompressionEnabled": "true",
-          "origins": [
-            {
-              "name": "origin1",
-              "properties": {
-                "hostName": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.blob,'https://',''),'/','')]"
-              }
+        {
+            "apiVersion": "2020-04-15",
+            "name": "[concat(variables('profileName'),'/',variables('endpointName'))]",
+            "type": "Microsoft.Cdn/profiles/endpoints",
+            "location": "[parameters('location')]",
+            "tags": "[parameters('resourceTags')]",
+            "dependsOn": [
+                "[variables('profileName')]",
+                "[variables('storageAccountName')]"
+            ],
+            "properties": {
+                "originHostHeader": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.blob,'https://',''),'/','')]",
+                "isHttpAllowed": "false",
+                "isHttpsAllowed": "true",
+                "queryStringCachingBehavior": "IgnoreQueryString",
+                "contentTypesToCompress": [
+                    "text/plain",
+                    "text/html",
+                    "text/css",
+                    "application/x-javascript",
+                    "text/javascript"
+                ],
+                "isCompressionEnabled": "true",
+                "origins": [
+                    {
+                        "name": "origin1",
+                        "properties": {
+                            "hostName": "[replace(replace(reference(variables('storageAccountName')).primaryEndpoints.blob,'https://',''),'/','')]"
+                        }
+                    }
+                ]
             }
-          ]
-        }
-      },
-    //   {
-    //     "name": "[concat(variables('profileName'), '/',variables('endpointName'), '/', variables('customDomain'))]",
-    //     "type": "Microsoft.Cdn/profiles/endpoints/customDomains",
-    //     "apiVersion": "2020-04-15",
-    //     "properties": {
-    //         "hostName": "[variables('customDomainName')]"
-    //     },
-    //     "dependsOn": [
-    //       "[variables('endpointName')]"
-    //     ]
-    //   }
+        },
+        //   {
+        //     "name": "[concat(variables('profileName'), '/',variables('endpointName'), '/', variables('customDomain'))]",
+        //     "type": "Microsoft.Cdn/profiles/endpoints/customDomains",
+        //     "apiVersion": "2020-04-15",
+        //     "properties": {
+        //         "hostName": "[variables('customDomainName')]"
+        //     },
+        //     "dependsOn": [
+        //       "[variables('endpointName')]"
+        //     ]
+        //   }
 
 
-{
+        {
             "apiVersion": "2018-11-01",
             "name": "[variables('funcAppName')]",
             "type": "Microsoft.Web/sites",
             "kind": "functionapp,linux",
             "location": "[parameters('location')]",
-        "tags": "[parameters('resourceTags')]",
+            "tags": "[parameters('resourceTags')]",
             "dependsOn": [
                 "microsoft.insights/components/appi-financemanager-dev",
                 "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]"
