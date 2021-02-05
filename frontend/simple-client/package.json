@@ -11,6 +11,7 @@
   "author": "Josef Fürlinger",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "bootstrap-fileinput": "^5.1.4",
     "chalk": "^4.1.0",
