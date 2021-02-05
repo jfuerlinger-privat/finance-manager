@@ -1,0 +1,38 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Infrastructure
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+    paths:
+      - "infrastructure/**"
+  pull_request:
+    branches: [ main ]
+    paths:
+      - "infrastructure/**"
+
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Log into Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+        # Deploy ARM template
+      - name: Run ARM deploy
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+          resourceGroupName: ${{ secrets.AZURE_RG }}
+          template: infrastructure/arm/azuredeploy.json
+          parameters: infrastructure/arm/azuredeploy.parameters.dev.json
