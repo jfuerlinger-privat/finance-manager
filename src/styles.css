@@ -1,0 +1,7 @@
+.jumbotron {
+    background-image: url('./assets/banner.jpg');
+    background-size: cover;
+    color: white;
+    text-transform: uppercase;
+}
+
