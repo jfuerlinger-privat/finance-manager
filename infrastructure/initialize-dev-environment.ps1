@@ -13,5 +13,5 @@ New-AzResourceGroupDeployment `
     -TemplateFile $templateFile `
     -TemplateParameterFile $templateParameterFile `
     -Name $deploymentName `
-    -Mode Incremental
-    #-Mode Complete
+    -Mode Complete
+    #-Mode Incremental
