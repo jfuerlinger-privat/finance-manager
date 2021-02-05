@@ -13,6 +13,7 @@
   "dependencies": {
     "bootstrap": "^4.6.0",
     "bootstrap-fileinput": "^5.1.4",
+    "chalk": "^4.1.0",
     "font-awesome": "^4.7.0",
     "piexifjs": "^1.0.6",
     "popper.js": "^1.16.1",
