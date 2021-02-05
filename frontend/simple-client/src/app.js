@@ -8,11 +8,14 @@ import '../node_modules/bootstrap-fileinput/js/fileinput';
 import '../node_modules/bootstrap-fileinput/themes/fas/theme';
 import '../node_modules/bootstrap-fileinput/js/locales/de';
 
+import '../node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput';
+
 const axios = require('axios').default;
 
 // Stylesheets
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/bootstrap-fileinput/css/fileinput.css';
+import '../node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.css';
 import './styles.css';
 
 const urlBaseLocal = 'http://localhost:7071';
