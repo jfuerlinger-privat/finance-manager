@@ -1,15 +1,15 @@
-name: Frontend
+name: Frontend (simple)
 
 on:
   workflow_dispatch:
   push:
     branches: [ main ]
     paths:
-      - "frontend/**"
+      - "frontend/simple-client/**"
   pull_request:
     branches: [ main ]
     paths:
-      - "frontend/**"
+      - "frontend/simple-client/**"
 
 
 jobs:
